@@ -1,0 +1,22 @@
+[
+  ']);\r  { $project: { _id: 0, venta_id: 1, cliente_id: 1, fecha: 1, total: 1 } }\rdb.ventas.aggregate([',
+  ']);\r  { $addFields: { iva_estimado: { $multiply: ["$total", 0.16] } } }\rdb.ventas.aggregate([',
+  ']);\r  { $project: { _id: 0, venta_id: 1, anio: { $year: "$fecha" } } }\rdb.ventas.aggregate([',
+  ']);\r  { $project: { _id: 0, venta_id: 1, mes: { $month: "$fecha" } } }\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      total: 1\r      mes: { $month: "$fecha" },\r      anio: { $year: "$fecha" },\r      _id: 0,\r    $project: {\r  {\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      ventas: { $push: "$venta_id" }\r      _id: { anio: { $year: "$fecha" }, mes: { $month: "$fecha" } },\r    $group: {\r  {\rdb.ventas.aggregate([',
+  ']);\r  { $sort: { "_id.anio": 1, "_id.mes": 1 } }\r  },\r    }\r      cantidadVentas: { $sum: 1 }\r      _id: { anio: { $year: "$fecha" }, mes: { $month: "$fecha" } },\r    $group: {\r  {\rdb.ventas.aggregate([',
+  ']);\r  { $sort: { "_id.anio": 1, "_id.mes": 1 } }\r  },\r    }\r      ingresoTotal: { $sum: "$total" }\r      _id: { anio: { $year: "$fecha" }, mes: { $month: "$fecha" } },\r    $group: {\r  {\rdb.ventas.aggregate([',
+  ']);\r  { $unwind: "$items" }\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      precio: "$items.precio"\r      cantidad: "$items.cantidad",\r      sku: "$items.sku",\r      venta_id: 1,\r      _id: 0,\r    $project: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      unidadesVendidas: { $sum: "$items.cantidad" }\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  { $sort: { unidadesVendidas: -1 } }\r  },\r    }\r      unidadesVendidas: { $sum: "$items.cantidad" }\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      }\r        $sum: { $multiply: ["$items.cantidad", "$items.precio"] }\r      ingresoGenerado: {\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  { $limit: 5 }\r  { $sort: { ingresoGenerado: -1 } },\r  },\r    }\r      }\r        $sum: { $multiply: ["$items.cantidad", "$items.precio"] }\r      ingresoGenerado: {\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  { $limit: 10 }\r  { $sort: { unidadesVendidas: -1 } },\r  },\r    }\r      unidadesVendidas: { $sum: "$items.cantidad" }\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      unidadesVendidas: { $sum: "$items.cantidad" }\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\r  { $match: { estado: "completada" } },\rdb.ventas.aggregate([',
+  ']);\r  { $sort: { "_id.anio": 1, "_id.mes": 1 } }\r  },\r    }\r      ingresoMensual: { $sum: "$total" }\r      _id: { anio: { $year: "$fecha" }, mes: { $month: "$fecha" } },\r    $group: {\r  {\r  { $match: { estado: "completada" } },\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      totalUnidadesVendidas: { $sum: "$items.cantidad" }\r      _id: null,\r    $group: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  }\r    }\r      promedioUnidadesPorPedido: { $avg: "$items.cantidad" }\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\rdb.ventas.aggregate([',
+  ']);\r  { $sort: { ingresoNeto: -1 } }\r  },\r    }\r      aparicionesEnPedidos: { $sum: 1 }\r      unidadesDespachadas: { $sum: "$items.cantidad" },\r      ingresoNeto: { $sum: { $multiply: ["$items.cantidad", "$items.precio"] } },\r      _id: "$items.sku",\r    $group: {\r  {\r  { $unwind: "$items" },\r  { $match: { estado: "completada" } },\rdb.ventas.aggregate(['
+]
