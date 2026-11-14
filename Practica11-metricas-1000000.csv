@@ -1,0 +1,9 @@
+﻿registros,consulta,indice,nReturned,docs_examined,keys_examined,mongo_ms,mediana_ms
+1000000,venta_id,Sin indice,1,1000000,0,2089,1641.794
+1000000,cliente_estado,Sin indice,6587,1000000,0,1739,1520.901
+1000000,fecha,Sin indice,270278,1000000,0,1283,2861.524
+1000000,sku,Sin indice,20026,1000000,0,2877,2332.865
+1000000,venta_id,Con indice,1,1,1,14,0.781
+1000000,cliente_estado,Con indice,6587,6587,6587,49,41.646
+1000000,fecha,Con indice,270278,270278,270278,1340,1846.833
+1000000,sku,Con indice,20026,20026,20026,58,112.56
